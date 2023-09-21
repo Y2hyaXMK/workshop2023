@@ -1,13 +1,15 @@
 import pandas as pd
 from urllib.error import URLError
 import altair as alt
-import flask
+import json
 from common.classes import VerkaeuferInfos, HoverboardParameter
 import requests
 
-myobj = {'id': 0, 'groesse': 0, 'gewicht': 0}
+myobj = {'groesse': 0, 'gewicht': 0, 'meldedaten': {'alter': 0, 'id': 'XXX'}}
 
-x = requests.post("http://localhost:8222", json = myobj)
-print(x)
+res_text = requests.post("http://localhost:8100/boardinfos", json = myobj).text
+print(res_text)
+res = json.loads(res_text)
+print(res['ist_fahrstil_sportlich'])
 
 

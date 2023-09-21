@@ -2,8 +2,9 @@ import streamlit as st
 import pandas as pd
 from urllib.error import URLError
 import altair as alt
-
-from common.classes import VerkaeuferInfos, HoverboardParameter
+import json
+from common.classes import VerkaeuferInfos, HoverboardParameter, MeldeDaten
+import requests
 
 
 @st.cache_data
@@ -16,13 +17,28 @@ def get_hoverboard_config(_verkaufer_infos):
     return ''
 
 try:
-    id = st.number_input('ID', step=1)
+    id = st.text_input('ID')
     st.text(id)
     weight = st.number_input('Gewicht', step=1)
     st.text(weight)
     height = st.number_input('Größe', step=1)
-    st.text(height)
-    hoverbaord_config = get_hoverboard_config(VerkaeuferInfos(id=id, gewicht=weight, groesse=height))
+    st.text(weight)
+    age = st.number_input('age', step=1)
+    st.text(age)
+    hoverbaord_config = get_hoverboard_config(VerkaeuferInfos(meldedaten=MeldeDaten(id=id, alter=age), gewicht=weight, groesse=height))
+
+    myobj = {'groesse': 0, 'gewicht': 0, 'meldedaten': {'alter': 0, 'id': 'XXX'}}
+
+    res_text = requests.post("http://localhost:8100/boardinfos", json = myobj).text
+    print(res_text)
+    res = json.loads(res_text)
+    st.text('Fahrstil sportlich: ' + str(res['ist_fahrstil_sportlich']))
+    st.text('Boden flüssig: ' + str(res['ist_boden_fluessig']))
+    st.text('Funktionserweiterung: ' + str(res['funktionserweiterung']))
+    st.text('Max Flughöhe: ' + str(res['max_flughoehe']))
+    st.text('Min Flughöhe: ' + str(res['min_flughoehe']))
+
+
     # df = get_UN_data()
     # countries = st.multiselect(
     #     "Choose countrieasdfasdfsadfes", list(df.index), ["China", "United States of America"]
