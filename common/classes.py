@@ -1,3 +1,5 @@
+from enum import Enum
+
 from pydantic import BaseModel
 
 
@@ -12,7 +14,9 @@ class MeldeDaten(BaseModel):
     Wohnort: str
 
 class BehoerdenInfos(BaseModel):
-
+    fahrtuechtig: 'Fahrtuechtig'
 
 class Fahrtuechtig(Enum):
-    JA
+    JA =1
+    EINGESCHRAENKT= 2
+    NEIN=3
