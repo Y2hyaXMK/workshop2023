@@ -63,6 +63,7 @@ def main_request():
     return class_to_parameter[klasse].json()
 
 data = read_in_data()
+print(f"Basierend auf {len(data)} Trainingsdatenpunkten")
 if __name__ == '__main__':
     print('asdf')
     print('qwer')

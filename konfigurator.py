@@ -86,9 +86,10 @@ def k_nearest_neighbor(info: AlleInfos, data: List[AlleInfos], k =3):
 def read_in_data() -> List[AlleInfos]:
     current_path = Path(__file__).parent / 'Werteliste_Hoverboard.xlsx'
     df = pd.read_excel(current_path)
+    print(df.columns)
     ret = []
     for index, row in df.iterrows():
-        fahrtuechtig = Fahrtuechtig[(row['Fahrtüchtig']).upper()]
+        fahrtuechtig = Fahrtuechtig[(row['Fahrtüchtig']).upper().strip()]
         alter = row['Alter']
         gewicht = row['Gewicht']
         groesse = row['Größe']
