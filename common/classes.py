@@ -11,14 +11,14 @@ class VerkaeuferInfos(BaseModel):
 class MeldeDaten(BaseModel):
     name: str
     vorname: str
-    Wohnort: str
+    wohnort: str
 
 class BehoerdenInfos(BaseModel):
     fahrtuechtig: 'Fahrtuechtig'
     vorstrafen: int
     versicherung: 'Versicherung'
-    behinderungsgrad: float
-    unfallswahrscheinlichkeit: float
+    behinderungsgrad: int
+    unfallswahrscheinlichkeit: int
 
 
 class Versicherung(Enum):
