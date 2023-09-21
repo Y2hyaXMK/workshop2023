@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import List
 
 from pydantic import BaseModel
 
@@ -12,6 +13,7 @@ class MeldeDaten(BaseModel):
     name: str
     vorname: str
     wohnort: str
+    alter: int
 
 class BehoerdenInfos(BaseModel):
     fahrtuechtig: 'Fahrtuechtig'
@@ -20,13 +22,35 @@ class BehoerdenInfos(BaseModel):
     behinderungsgrad: int
     unfallswahrscheinlichkeit: int
 
+class AlleInfos(BaseModel):
+    verkaeufer: VerkaeuferInfos
+    behoerde: BehoerdenInfos
+
 
 class Versicherung(Enum):
     JA = 1
     NEIN =2
 
 
+
+
+class HoverboardParameter(BaseModel):
+    ist_fahrstil_sportlich: bool
+    energiesparverhalten:int
+    ist_boden_fluessig: bool
+    funktionserweiterung: List[str]
+    max_flughoehe: float
+    min_flughoehe: float
+    max_speed: int
+    verbotszone: List[str]
+    breite: int
+    laenge: int
+    geographische_lage = List[str]
+    beschleunigung: int
+    steigung: int
+
+
 class Fahrtuechtig(Enum):
-    JA =1
-    EINGESCHRAENKT= 2
-    NEIN=3
+    JA = 0
+    EINGESCHRAENKT= 50
+    NEIN=100
