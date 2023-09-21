@@ -37,6 +37,17 @@ try:
     st.text('Funktionserweiterung: ' + str(res['funktionserweiterung']))
     st.text('Max Flughöhe: ' + str(res['max_flughoehe']))
     st.text('Min Flughöhe: ' + str(res['min_flughoehe']))
+    st.text('Max Speed: ' + str(res['max_speed']))
+    st.text('verbotszone: ' + str(res['verbotszone']))
+    st.text('max_breite: ' + str(res['max_breite']))
+    st.text('min_breite: ' + str(res['min_breite']))
+    st.text('max_laenge: ' + str(res['max_laenge']))
+    st.text('min_laenge: ' + str(res['min_laenge']))
+    st.text('geographische_lage: ' + str(res['geographische_lage']))
+    st.text('beschleunigung: ' + str(res['beschleunigung']))
+    st.text('steigung: ' + str(res['steigung']))
+
+
 
 
     # df = get_UN_data()
