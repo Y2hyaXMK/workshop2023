@@ -15,6 +15,16 @@ class MeldeDaten(BaseModel):
 
 class BehoerdenInfos(BaseModel):
     fahrtuechtig: 'Fahrtuechtig'
+    vorstrafen: int
+    versicherung: 'Versicherung'
+    behinderungsgrad: float
+    unfallswahrscheinlichkeit: float
+
+
+class Versicherung(Enum):
+    JA = 1
+    NEIN =2
+
 
 class Fahrtuechtig(Enum):
     JA =1
