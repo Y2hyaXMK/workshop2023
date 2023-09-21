@@ -11,23 +11,38 @@ app = Flask(__name__)
 
 
 def get_fahrtuechtigkeit_from_behoerde(verkaufinfos: VerkaeuferInfos) -> Fahrtuechtig:
-    return Fahrtuechtig.JA
+    if verkaufinfos.meldedaten.vorname=="Ned":
+        return Fahrtuechtig.NEIN
+    elif verkaufinfos.meldedaten.vorname=='Christian':
+        return Fahrtuechtig.EINGESCHRAENKT
+    else:
+        return Fahrtuechtig.JA
 
 
 def get_vorstrafen_from_Polizei(verkaufinfos: VerkaeuferInfos)-> int:
-    return 5
+    if verkaufinfos.meldedaten.name == 'Kohlhase':
+        return 99
+    if verkaufinfos.meldedaten.name == 'Boehmann':
+        return 66
+    else:
+        return 0
 
 
 def get_versicherung_from_allianz(verkaufinfos: VerkaeuferInfos)-> Versicherung:
-    return Versicherung.JA
-
+    if verkaufinfos.meldedaten.wohnort=='Bremen':
+        return Versicherung.NEIN
+    else:
+        return Versicherung.JA
 
 def get_behinderungs_grad_from_medizin(verkaufinfos: VerkaeuferInfos) -> float:
-    return 50
+    if verkaufinfos.gewicht > 300 or verkaufinfos.groesse < 120:
+        return 80
+    else:
+        return 20
 
 
 def get_unfallswahrscheinlichkeit(verkaufinfos: VerkaeuferInfos) -> float:
-    return 70
+    return len(verkaufinfos.meldedaten.name)
 
 
 @app.route('/boardinfos',methods=['POST'])
