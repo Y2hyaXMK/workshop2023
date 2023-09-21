@@ -1,1 +1,0 @@
-Hier das Frontend. Der Verkaeufer gibt die Daten vom Kunden an, verschickt die Infos ans Backend und kriegt die gesammelten Informationen. Anhand der Informationen werden die richtigen Konfiguationseinstellungen generiert. 
