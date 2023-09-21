@@ -83,26 +83,30 @@ def k_nearest_neighbor(info: AlleInfos, data: List[AlleInfos], k =3):
     return most_common_class
 
 
-if __name__ == '__main__':
+def read_in_data() -> List[AlleInfos]:
     current_path = Path(__file__).parent / 'Werteliste_Hoverboard.xlsx'
     df = pd.read_excel(current_path)
     ret = []
-    for index,row in df.iterrows():
-        fahrtuechtig =         Fahrtuechtig[(row['Fahrtüchtig']).upper()]
+    for index, row in df.iterrows():
+        fahrtuechtig = Fahrtuechtig[(row['Fahrtüchtig']).upper()]
         alter = row['Alter']
         gewicht = row['Gewicht']
         groesse = row['Größe']
         vorstrafen = row['Vorstrafen']
-        versicherung = row['Versicherung'] =='ja'
+        versicherung = row['Versicherung'] == 'ja'
         behinderung = row['Behinderungsgrad']
         unfalls = row['Unfallwahrscheinlichkeit']
         klasse = row['Klasse']
-        behoerde = BehoerdenInfos(fahrtuechtig = fahrtuechtig, vorstrafen=vorstrafen, ist_versichert=versicherung, behinderungsgrad=behinderung, unfallswahrscheinlichkeit= unfalls)
+        behoerde = BehoerdenInfos(fahrtuechtig=fahrtuechtig, vorstrafen=vorstrafen, ist_versichert=versicherung,
+                                  behinderungsgrad=behinderung, unfallswahrscheinlichkeit=unfalls)
         meldedaten = MeldeDaten(id=str(row['ID']), alter=int(alter))
         verkaeuferinfos = VerkaeuferInfos(gewicht=gewicht, groesse=groesse, meldedaten=meldedaten)
-        if klasse in ['A', 'B','C', 'D', 'E', 'F']:
-            print(klasse)
-            all_infos = AlleInfos(behoerde=behoerde, verkaeufer=verkaeuferinfos, parameter_klasse = klasse)
+        if klasse in ['A', 'B', 'C', 'D', 'E', 'F']: #Nicht ausgefüllt = 'nan'
+            all_infos = AlleInfos(behoerde=behoerde, verkaeufer=verkaeuferinfos, parameter_klasse=klasse)
             ret.append(all_infos)
+    return ret
+
+if __name__ == '__main__':
+    read_in_data()
 
 
