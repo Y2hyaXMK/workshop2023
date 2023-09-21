@@ -1,6 +1,10 @@
 import math
+from pathlib import Path
 
-from common.classes import AlleInfos, Fahrtuechtig
+import pandas as pd
+from typing import List
+
+from common.classes import AlleInfos, Fahrtuechtig, BehoerdenInfos, MeldeDaten, VerkaeuferInfos
 
 
 def vergleiche_gewicht(gewicht, gewicht1) -> int:
@@ -68,4 +72,37 @@ def vergleiche_alter(info1: AlleInfos, info2: AlleInfos) -> int:
     vergleich = abs(info1.verkaeufer.meldedaten.alter - info2.verkaeufer.meldedaten.alter)
     return skaliere_ergebnis(0,150,vergleich)
 
-def k_nearest_neighbor()
+def k_nearest_neighbor(info: AlleInfos, data: List[AlleInfos], k =3):
+    assert len(data)>  k
+    entfernungen = [{"class": x.parameter_klasse, "entfernung": entfernung(info, x)} for x in data]
+    sortiert = entfernungen.sort(key= lambda x: x['entfernung'])[:k]
+    asdf = {}
+    for ding in sortiert:
+        asdf[ding['class']] = asdf.get(ding['class'],0 ) +1
+    most_common_class = max(asdf.keys(), key=lambda x: asdf[x])
+    return most_common_class
+
+
+if __name__ == '__main__':
+    current_path = Path(__file__).parent / 'Werteliste_Hoverboard.xlsx'
+    df = pd.read_excel(current_path)
+    ret = []
+    for index,row in df.iterrows():
+        fahrtuechtig =         Fahrtuechtig[(row['Fahrtüchtig']).upper()]
+        alter = row['Alter']
+        gewicht = row['Gewicht']
+        groesse = row['Größe']
+        vorstrafen = row['Vorstrafen']
+        versicherung = row['Versicherung'] =='ja'
+        behinderung = row['Behinderungsgrad']
+        unfalls = row['Unfallwahrscheinlichkeit']
+        klasse = row['Klasse']
+        behoerde = BehoerdenInfos(fahrtuechtig = fahrtuechtig, vorstrafen=vorstrafen, ist_versichert=versicherung, behinderungsgrad=behinderung, unfallswahrscheinlichkeit= unfalls)
+        meldedaten = MeldeDaten(id=str(row['ID']), alter=int(alter))
+        verkaeuferinfos = VerkaeuferInfos(gewicht=gewicht, groesse=groesse, meldedaten=meldedaten)
+        if klasse in ['A', 'B','C', 'D', 'E', 'F']:
+            print(klasse)
+            all_infos = AlleInfos(behoerde=behoerde, verkaeufer=verkaeuferinfos, parameter_klasse = klasse)
+            ret.append(all_infos)
+
+

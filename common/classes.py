@@ -11,9 +11,7 @@ class VerkaeuferInfos(BaseModel):
 
 
 class MeldeDaten(BaseModel):
-    name: str
-    vorname: str
-    wohnort: str
+    id: str
     alter: int
 
 
@@ -28,6 +26,7 @@ class BehoerdenInfos(BaseModel):
 class AlleInfos(BaseModel):
     verkaeufer: VerkaeuferInfos
     behoerde: BehoerdenInfos
+    parameter_klasse: str = None
 
 
 class Versicherung(Enum):
@@ -53,5 +52,5 @@ class HoverboardParameter(BaseModel):
 
 class Fahrtuechtig(Enum):
     JA = 0
-    EINGESCHRAENKT = 50
+    EINGESCHRÄNKT = 50
     NEIN = 100

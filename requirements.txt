@@ -2,3 +2,5 @@ pydantic
 streamlit
 flask
 waitress
+openpyxl
+pandas
