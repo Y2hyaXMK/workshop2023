@@ -63,8 +63,7 @@ def entfernung(info1: AlleInfos, info2: AlleInfos) -> float:
     fahrtuechtig = vergleiche_fahrtuechtig(info1.behoerde.fahrtuechtig,info2.behoerde.fahrtuechtig)
     vorstrafen = vergleiche_vorstrafen(info1.behoerde.vorstrafen, info2.behoerde.vorstrafen)
     unfalls = vergleiche_unfallswahrscheinlichkeit(info1.behoerde.unfallswahrscheinlichkeit, info2.behoerde.unfallswahrscheinlichkeit)
-    wohnort = vergleiche_wohnort(info1.verkaeufer.meldedaten.wohnort, info2.verkaeufer.meldedaten.wohnort)
-    summe = alter**2 +gewicht**2 + groesse**2+versicherung**2  + behinderungs_grad**2 + fahrtuechtig**2+vorstrafen**2+unfalls**2+wohnort**2
+    summe = alter**2 +gewicht**2 + groesse**2+versicherung**2  + behinderungs_grad**2 + fahrtuechtig**2+vorstrafen**2+unfalls**2
     return math.sqrt(summe)
 
 
@@ -75,7 +74,8 @@ def vergleiche_alter(info1: AlleInfos, info2: AlleInfos) -> int:
 def k_nearest_neighbor(info: AlleInfos, data: List[AlleInfos], k =3):
     assert len(data)>  k
     entfernungen = [{"class": x.parameter_klasse, "entfernung": entfernung(info, x)} for x in data]
-    sortiert = entfernungen.sort(key= lambda x: x['entfernung'])[:k]
+    entfernungen.sort(key= lambda x: x['entfernung'])
+    sortiert = entfernungen[:k]
     asdf = {}
     for ding in sortiert:
         asdf[ding['class']] = asdf.get(ding['class'],0 ) +1
