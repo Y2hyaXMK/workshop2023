@@ -5,7 +5,8 @@ import requests as requests
 from flask import Flask
 from waitress import serve
 
-from common.classes import VerkaeuferInfos, BehoerdenInfos, Fahrtuechtig, Versicherung, MeldeDaten, AlleInfos
+from common.classes import VerkaeuferInfos, BehoerdenInfos, Fahrtuechtig, Versicherung, MeldeDaten, AlleInfos, \
+    class_to_parameter
 from konfigurator import read_in_data, k_nearest_neighbor
 
 app = Flask(__name__)
@@ -59,7 +60,7 @@ def main_request():
     ret = BehoerdenInfos(fahrtuechtig= fahrtuechtigkeit, vorstrafen= vorstrafen, ist_versichert=versicherung, behinderungsgrad=behinderungsgrad, unfallswahrscheinlichkeit=unfallswahrscheinlichkeit)
     kombinierte_infos = AlleInfos(verkaeufer=verkaufinfos, behoerde = ret, klasse=None)
     klasse = k_nearest_neighbor(kombinierte_infos, data= data)
-    return klasse
+    return class_to_parameter[klasse].json()
 
 data = read_in_data()
 if __name__ == '__main__':
